@@ -14,7 +14,7 @@
 
 5. Then search for Processing: create task file `Processing: Run Processing Project` or press `command + shift + B` to run the `pde` file. An `out` folder will be created
 
-<img src="file:///Users/nichole/Desktop/Screenshot%202023-09-04%20at%203.40.52%20PM.png" title="" alt="Screenshot 2023-09-04 at 3.40.52 PM.png" width="305">
+<img src="f./Screenshot%202023-09-04%20at%203.40.52%20PM.png" title="" alt="Screenshot 2023-09-04 at 3.40.52 PM.png" width="305">
 
 ## Reference
 
