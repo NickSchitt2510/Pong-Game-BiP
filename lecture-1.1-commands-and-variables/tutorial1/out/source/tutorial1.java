@@ -18,9 +18,12 @@ public class tutorial1 extends PApplet {
 // Task 1 & 2
 // int x;
 
-// Task 3 & 4
+// Task 3
 int y;
-float radius;
+
+// Task 4
+float a;
+
 public void setup () {
   /* size commented out by preprocessor */;
   // Task 1
@@ -29,9 +32,8 @@ public void setup () {
   // Task 2
   // x = 500;
 
-  // Task 3
+  // Task 3 & 4
   y = 100;
-  radius = 100;
 }
 
 // Task 1
@@ -49,11 +51,24 @@ public void setup () {
 // }
 
 // Task 3
+// void draw() {
+//   background(0);
+//   y = y+1;
+//   circle(200,y,100);
+// }
+
+// Task 4
+// void draw() {
+//   background(0);
+//   a = 100*random(5);
+//   y = y+1;
+//   circle(200,y,a);
+// }
+
 public void draw() {
   background(0);
-  radius = 100*random(5);
-  y = y+1;
-  circle(200,y,radius);
+  a = a+0.01f;
+  ellipse(sin(a)*300+300,300,10,10);
 }
 
 

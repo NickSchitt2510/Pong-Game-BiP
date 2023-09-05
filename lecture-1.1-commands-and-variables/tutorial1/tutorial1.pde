@@ -5,7 +5,7 @@
 int y;
 
 // Task 4
-float radius;
+float a;
 
 void setup () {
   size(600,600);
@@ -17,7 +17,6 @@ void setup () {
 
   // Task 3 & 4
   y = 100;
-  radius = 100;
 }
 
 // Task 1
@@ -35,16 +34,22 @@ void setup () {
 // }
 
 // Task 3
-void draw() {
-  background(0);
-  y = y+1;
-  circle(200,y,100);
-}
+// void draw() {
+//   background(0);
+//   y = y+1;
+//   circle(200,y,100);
+// }
 
 // Task 4
+// void draw() {
+//   background(0);
+//   a = 100*random(5);
+//   y = y+1;
+//   circle(200,y,a);
+// }
+
 void draw() {
   background(0);
-  radius = 100*random(5);
-  y = y+1;
-  circle(200,y,radius);
+  a = a+0.01;
+  ellipse(sin(a)*300+300,300,10,10);
 }
