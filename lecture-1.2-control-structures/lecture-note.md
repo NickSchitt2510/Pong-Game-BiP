@@ -77,3 +77,101 @@ false || false == false;
 !true == false;
 !false == true;
 ```
+
+## Bounce and move
+
+### Method 1: Use boolean
+
+```processing
+// x and y cordinate of the ball
+float x;
+float y;
+
+// distance of the ball moves
+float distance;
+int radius;
+
+// record x direction. Default value: true. AKA to the right.
+boolean directionX;
+// record y direction. Default value: true. AKA to the top
+boolean directionY;
+
+void setup() {
+  size(600, 600);
+  x = 25;
+  y = 100;
+  distance = 5;
+  radius = 25;
+  directionX = true;
+  directionY = true;
+}
+
+void draw() {
+  background(0);
+  circle(x, y, 2*radius);
+
+  // x axix: first method
+  if (x < radius) {
+    directionX = true;
+  }
+  if (x > 600 - radius) {
+    directionX = false;
+  }
+  if (directionX == true) {
+    x = x + distance;
+  } else {
+    x = x - distance;
+  }
+
+  // y-axis: second method
+  if (y < radius) {
+    directionY = true;
+  } 
+  if (y > 600 - radius) {
+    directionY = false;
+  }
+  if (directionY == true) {
+    y = y + distance;
+  } else {
+    y = y - distance;
+  }
+}
+```
+
+## Method 2:
+
+```processing
+// x and y cordinate of the ball
+float x;
+float y;
+
+// distance a and b of the ball moves for x and y
+float a;
+float b;
+int radius;
+
+void setup() {
+  size(600, 600);
+  x = 25;
+  y = 100;
+  a = 5;
+  b = 5;
+  radius = 25;
+}
+
+void draw() {
+  background(0);
+  circle(x, y, 2*radius);
+  x = x + a;
+  y = y + b;
+
+  if (x < radius || x > 600 - radius) {
+    // 變號
+    a = a * -1;
+  }
+  if (y < radius || y > 600 - radius) {
+    b = b * -1;
+  }
+
+}
+```
