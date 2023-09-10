@@ -83,3 +83,9 @@ void keyPressed () {
 
 void keyReleased() {}
 ```
+
+### Project: make two bars move up and down
+
+```processing
+
+```
