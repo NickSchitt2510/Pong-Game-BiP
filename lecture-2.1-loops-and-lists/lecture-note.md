@@ -180,7 +180,7 @@ void setup() {
   y = new float [num];
   dx = new float [num];
   dy = new float [num];
-  
+
   for (int i = 0; i < num; i++) {
     x[i] = random(radius,width-radius);
     y[i] = random(radius,width-radius);
@@ -206,7 +206,6 @@ void draw() {
     // draw circles
     ellipse(x[i],y[i],radius*2,radius*2);
   }
-  
-}
 
+}
 ```
