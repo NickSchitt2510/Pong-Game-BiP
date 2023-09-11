@@ -15,71 +15,75 @@ import java.io.IOException;
 
 public class pongv2 extends PApplet {
 
-// variables for bats
-float y1; // left one
-float d1;
-float y2; // right one
-float d2;
-int length;
-int thickness;
-int margin;
+Ball b1, b2, b3;
+Bat a1, a2;
 
+// Bat variables
+int length; // w
+int thickness; // h
+int margin; // m
+// Ball variables
 int r; // radius
 
-Ball b1;
-Ball b2;
-Ball b3;
 
 public void setup() {
   /* size commented out by preprocessor */;
   // set up for bats
   length = 100;
   thickness = 20;
-  y1 = 250;
-  y2 = 250;
-  
   margin = 50;
   r = 10;
 
   b1 = new Ball(width/2, height/2, r);
   b2 = new Ball(width/2, height/4, 2*r);
   b3 = new Ball(width/2, height*3/4, 2.5f*r);
+
+  a1 = new Bat(margin, height/2, length, thickness);
+  a2 = new Bat(width-margin, height/2, length, thickness);
 }
 
 public void draw() {
   background(0);
 
-  // control bars
-  y1 = y1 + d1;
-  
-  // out of bound -> reset
-  if (y1 < 0) {
-    y1 = 0;
-  } else if (y1 > height - length) {
-    y1 = height - length;
-  }
-
-  y2 = y2 + d2;
-  if (y2 < 0) {
-    y2 = 0;
-  } else if (y2 > height - length) {
-    y2 = height - length;
-  }
-
-  // in case of d is bigger and recorrect order
-  rect(margin, y1, thickness, length);
-  rect(width-margin, y2, thickness, length);
-
-  // control ball
+  // Ball
   b1.plot();
   b2.plot();
   b3.plot();
   b1.move();
   b2.move();
   b3.move();
-  
+
+  // Bat
+  a1.plot();
+  a2.plot();
+  a1.move();
+  a2.move();
 }
 
+public void keyPressed() {
+  // Left bar control
+  if (key == 'w' && a1.y > 0) {
+    a1.dy = -5;
+  }
+  else if (key == 's' && a1.y < height - length) {
+    a1.dy = 5;
+  }
+
+  // Right bar control
+  if (keyCode == UP && a2.y > 0) {
+    a2.dy = -5;
+  }
+  else if (keyCode == DOWN && a2.y < width - length) {
+    a2.dy = 5;
+  }
+}
+public void keyReleased() {
+  if (key == 'w' || key == 's') {
+    a1.dy = 0;
+  } else if (keyCode == UP || keyCode == DOWN) {
+    a2.dy = 0;
+  } 
+}
 class Ball {
   // Fields
   float x;
@@ -117,39 +121,44 @@ class Ball {
     }
     
     // Bounce when touching the bat; gap from margin: 50; height of bat: 20
-    if (x == margin + 20 + r && y > y1 && y < y1 + length) {
+    if (x == margin + thickness + r && y > a1.y && y < a1.y + length) {
       dx = dx * -1;
     }
-    if (x == width - margin - r && y > y2 && y < y2 + length) {
+    if (x == width - margin - r && y > a2.y && y < a2.y + length) {
       dx = dx * -1;
     }
   }
 }
+class Bat {
+  float x;
+  float y;
+  float dy;
+  float w;
+  float h;
+  float m; // margin
 
+  Bat (float x, float y, float w, float h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.dy = 0;
+  }
 
-// Control bats with keys
-public void keyReleased() {
-  if (key == 'w' || key == 's') {
-    d1 = 0;
-  } else if (keyCode == UP || keyCode == DOWN) {
-    d2 = 0;
-  } 
-}
+  public void move() {
 
-public void keyPressed() {
-  // Left bar control
-  if (key == 'w' && y1 > 0) {
-    d1 = -5;
+    // control bars
+    y = y + dy;
+    // out of bound -> reset
+    if (y < 0) {
+      y = 0;
+    } else if (y > height - w) {
+      y = height - w;
+    }
   }
-  else if (key == 's' && y1 < height - length) {
-    d1 = 5;
-  }
-  // Right bar control
-  if (keyCode == UP && y2 > 0) {
-    d2 = -5;
-  }
-  else if (keyCode == DOWN && y2 < width - length) {
-    d2 = 5;
+
+  public void plot() {
+    rect(x, y, h, w);
   }
 }
 
