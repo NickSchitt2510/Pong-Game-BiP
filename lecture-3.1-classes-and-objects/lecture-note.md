@@ -8,13 +8,13 @@ Functions and Methods are almost the same
 
 ### Components
 
-| Name            | Description                          | Code                                                                                                                             |
-| --------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| **Keyword**     | `class`+class name                   | `class Ball {`                                                                                                                   |
-| **Fields**      | variables with differenct data tyeps | `   float x;`<br/>`   float y;`<br/>`   float d;`                                                                                |
-| **Constructor** | class name + arguments               | `    public Ball (int x, int y, int d) {`<br/>`       this.x = x;`<br/>`       this.y = y;`<br/>`       this.d = d;`<br/>`    }` |
-| **Methods**     | functions in class                   | `    void move () {`<br/>`       x = x + 1;`<br/>`       y = y + 1;`<br/>`    }`                                                 |
-| End of class    |                                      | `}``                                                                                                                             |
+| Name            | Description                                                                                      | Code                                                                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Keyword**     | `class`+class name                                                                               | `class Ball {`                                                                                                                   |
+| **Fields**      | variables with differenct data tyeps. It's not really in the momory until we declare the object. | `   float x;`<br/>`   float y;`<br/>`   float d;`                                                                                |
+| **Constructor** | class name + arguments                                                                           | `    public Ball (int x, int y, int d) {`<br/>`       this.x = x;`<br/>`       this.y = y;`<br/>`       this.d = d;`<br/>`    }` |
+| **Methods**     | functions in class                                                                               | `    void move () {`<br/>`       x = x + 1;`<br/>`       y = y + 1;`<br/>`    }`                                                 |
+| End of class    |                                                                                                  | `}``                                                                                                                             |
 
 ```processing
 Ball b;
@@ -102,5 +102,52 @@ class Ball {
         x = x+1;
         y = y+1;
     }
+}
+```
+
+```processing
+Ball b1;
+Ball b2;
+
+void setup () {
+  size(600,600);
+  b1 = new Ball (235,237,52);
+  b2 = new Ball (124,74,12);
+
+  println(b1.getX());
+  b1.setX(35);
+  println(b1.getX());
+  b1.setX(10000000);
+  println(b2.getX());
+
+
+}
+
+void draw () {
+
+}
+
+class Ball {
+  float x;
+  float y;
+  float d;
+
+  Ball (float x, float y, float r) { 
+    this.x = x;
+    this.y = y;
+    this.d = r*2;
+  }
+
+  // why not b1.x = ? -> QA
+  void setX(float v) {
+    if (v > 1000) {
+      v = 1000;
+    }
+    x = v;
+  }
+
+  float getX() {
+    return this.x;
+  }
 }
 ```
