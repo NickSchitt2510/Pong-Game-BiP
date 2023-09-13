@@ -27,16 +27,20 @@
   - This is known as method overloading, and it is not allowed based solely on the return type. However, you can overload methods by changing the number or types of parameters.
   
   ```java
-  public class MathUtils {
-      // Method to calculate the sum of two integers
-      public int calculateSum(int a, int b) {
-          return a + b;
-      }
-  
-      // Method to calculate the sum of three integers
-      public int calculateSum(int a, int b, int c) {
-          return a + b + c;
-      }
+  GameElement (float x, float y) {
+      this.x = x;
+      this.y = y;
+      this.dx = 0;
+      this.dy = 0;
+      this.c = color(255);
+  }
+  // Overloading bc two floats
+  GameElement (float dx, float dy) {
+      this.x = 0;
+      this.y = 0;
+      this.dx = dx;
+      this.dy = dy;
+      this.c = color(255);
   }
   ```
 

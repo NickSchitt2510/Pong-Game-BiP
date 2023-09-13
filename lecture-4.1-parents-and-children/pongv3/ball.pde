@@ -1,34 +1,26 @@
-class Ball {
+class Ball extends GameElement {
   // Fields
-  float x;
-  float y;
-  float dx;
-  float dy;
   float r; // radius
 
   // Constructors
   Ball (float x, float y, float r) {
-    this.x = x;
-    this.y = y;
+    super(x, y, 5, 5, color(255));
     this.r = r;
-    this.dx = 5;
-    this.dy = 5;
   }
 
   // Methods
   void plot() {
+    fill(c);
     ellipse(x, y, r*2, r*2);
   }
 
-  void move() {
-    this.x = this.x + this.dx;
-    this.y = this.y + this.dy;
-
+  void reactToBorders() {
     // Border check
     if (x > width-r || x < r) {
       // reset
       x = width/2;
       y = height/2;
+
     }
     if (y > height-r || y < r) {
       dy = dy * -1;

@@ -1,32 +1,25 @@
-class Bat {
-  float x;
-  float y;
-  float dy;
+class Bat extends GameElement {
   float w;
   float h;
-  float m; // margin
 
   Bat (float x, float y, float w, float h) {
-    this.x = x;
-    this.y = y;
+    super(x, y);
     this.w = w;
     this.h = h;
-    this.dy = 0;
   }
 
-  void move() {
-
-    // control bars
-    y = y + dy;
+  void reactToBorders() {
     // out of bound -> reset
     if (y < 0) {
       y = 0;
-    } else if (y > height - w) {
+    }
+    if (y > height - w) {
       y = height - w;
     }
   }
 
   void plot() {
+    fill(c);
     rect(x, y, h, w);
   }
 }
