@@ -7,7 +7,7 @@ class GameElement {
   // datatype to store color
   color c;
 
-  // we can just enter default value 0 in child
+  // we can just enter default value 0 in childxP
   GameElement(float x, float y, float dx, float dy, color c) {
     // QA for x and y coordination
     if (x > width) {
