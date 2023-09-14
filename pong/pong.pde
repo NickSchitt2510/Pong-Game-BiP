@@ -48,19 +48,19 @@ void draw() {
   b1.handle();
   
   // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
-  if (s1+s2 > 20) {
+  if (s1+s2 > 30) {
     color newColor = 115;
     b1.c = newColor;
   }
-  if (s1+s2 > 25) {
+  if (s1+s2 > 35) {
     color newColor = 115-25;
     b1.c = newColor;
   }
-  if (s1+s2 > 30) {
+  if (s1+s2 > 40) {
     color newColor = 115-25*2;
     b1.c = newColor;
   }
-  if (s1+s2 > 35) {
+  if (s1+s2 > 45) {
     color newColor = 115-25*3;
     b1.c = newColor;
   }

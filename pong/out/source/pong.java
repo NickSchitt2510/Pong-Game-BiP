@@ -63,26 +63,24 @@ public void draw() {
 
   // Object
   b1.handle();
-  // Ball color change when player scores when both player eaches 20 every 5 balls color change darker
-
-  b1.c = calculateColorChange();
-
-  // if (s1+s2 > 20) {
-  //   color newColor = 115;
-  //   b1.c = newColor;
-  // }
-  // if (s1+s2 > 25) {
-  //   color newColor = 115-25;
-  //   b1.c = newColor;
-  // }
-  // if (s1+s2 > 30) {
-  //   color newColor = 115-25*2;
-  //   b1.c = newColor;
-  // }
-  // if (s1+s2 > 35) {
-  //   color newColor = 115-25*3;
-  //   b1.c = newColor;
-  // }
+  
+  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
+  if (s1+s2 > 20) {
+    int newColor = 115;
+    b1.c = newColor;
+  }
+  if (s1+s2 > 25) {
+    int newColor = 115-25;
+    b1.c = newColor;
+  }
+  if (s1+s2 > 30) {
+    int newColor = 115-25*2;
+    b1.c = newColor;
+  }
+  if (s1+s2 > 35) {
+    int newColor = 115-25*3;
+    b1.c = newColor;
+  }
 
   // Shrinking bats when player scores
   int newLen1 = len2 - min(PApplet.parseInt(s1)/5*20, 80);
@@ -95,14 +93,6 @@ public void draw() {
   a2.handle();
 }
 
-public int calculateColorChange() {
-  int totalScore = s1 + s2;
-  int maxScoreForColorChange = 20; // Adjust this as needed
-  int minColorValue = 115;
-  int colorChangeStep = 25;
-
-  return color(min(minColorValue - (totalScore > maxScoreForColorChange ? (totalScore - maxScoreForColorChange) * colorChangeStep : 0), 255));
-}
 
 public void plotMiddleLine() {
   for (int i = 0; i < 30; i++) {
