@@ -45,7 +45,6 @@ public void setup() {
   textFont(myFont); // Set the font for text
 
   b1 = new Ball(width/2, height*3/4, r);
-  b1.c = color(0, 255, 0);
 
   // Reset score
   s1 = 0;
@@ -64,19 +63,45 @@ public void draw() {
 
   // Object
   b1.handle();
+  // Ball color change when player scores when both player eaches 20 every 5 balls color change darker
 
-  shrinkingBats();
+  b1.c = calculateColorChange();
+
+  // if (s1+s2 > 20) {
+  //   color newColor = 115;
+  //   b1.c = newColor;
+  // }
+  // if (s1+s2 > 25) {
+  //   color newColor = 115-25;
+  //   b1.c = newColor;
+  // }
+  // if (s1+s2 > 30) {
+  //   color newColor = 115-25*2;
+  //   b1.c = newColor;
+  // }
+  // if (s1+s2 > 35) {
+  //   color newColor = 115-25*3;
+  //   b1.c = newColor;
+  // }
+
+  // Shrinking bats when player scores
+  int newLen1 = len2 - min(PApplet.parseInt(s1)/5*20, 80);
+  int newLen2 = len1 - min(PApplet.parseInt(s2)/5*20, 80);
+  a1.w = newLen1;
+  a2.w = newLen2;
+
 
   a1.handle();
   a2.handle();
 }
 
-public void shrinkingBats() {
-  // Shrinking bats
-  int newLen1 = len2 - min(PApplet.parseInt(s1)/4*20, 80);
-  int newLen2 = len1 - min(PApplet.parseInt(s2)/4*20, 80);
-  a1.w = newLen1;
-  a2.w = newLen2;
+public int calculateColorChange() {
+  int totalScore = s1 + s2;
+  int maxScoreForColorChange = 20; // Adjust this as needed
+  int minColorValue = 115;
+  int colorChangeStep = 25;
+
+  return color(min(minColorValue - (totalScore > maxScoreForColorChange ? (totalScore - maxScoreForColorChange) * colorChangeStep : 0), 255));
 }
 
 public void plotMiddleLine() {

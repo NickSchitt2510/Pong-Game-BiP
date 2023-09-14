@@ -28,7 +28,6 @@ void setup() {
   textFont(myFont); // Set the font for text
 
   b1 = new Ball(width/2, height*3/4, r);
-  b1.c = color(0, 255, 0);
 
   // Reset score
   s1 = 0;
@@ -47,16 +46,36 @@ void draw() {
 
   // Object
   b1.handle();
+  
+  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
+  if (s1+s2 > 20) {
+    color newColor = 115;
+    b1.c = newColor;
+  }
+  if (s1+s2 > 25) {
+    color newColor = 115-25;
+    b1.c = newColor;
+  }
+  if (s1+s2 > 30) {
+    color newColor = 115-25*2;
+    b1.c = newColor;
+  }
+  if (s1+s2 > 35) {
+    color newColor = 115-25*3;
+    b1.c = newColor;
+  }
 
-  // Shrinking bats
-  int newLen1 = len2 - min(int(s1)/4*20, 80);
-  int newLen2 = len1 - min(int(s2)/4*20, 80);
+  // Shrinking bats when player scores
+  int newLen1 = len2 - min(int(s1)/5*20, 80);
+  int newLen2 = len1 - min(int(s2)/5*20, 80);
   a1.w = newLen1;
   a2.w = newLen2;
+
 
   a1.handle();
   a2.handle();
 }
+
 
 void plotMiddleLine() {
   for (int i = 0; i < 30; i++) {
