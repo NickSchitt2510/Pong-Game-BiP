@@ -4,7 +4,7 @@ class Ball extends GameElement {
 
   // Constructors
   Ball (float x, float y, float r) {
-    super(x, y, 3, 3, color(255));
+    super(x, y, 4, 4, color(255));
     this.r = r;
   }
 
@@ -18,17 +18,19 @@ class Ball extends GameElement {
     // Border check
     if (x > width-r) {
       // reset
-      // x = width/2;
-      // y = height/2;
+      x = width/2;
+      y = height/2;
+      s1 = 0;
+      s2 = 0;
       dx = dx * -1;
-      s1 += 1;
     }
     if (x < r) {
       // reset
-      // x = width/2;
-      // y = height/2;
+      x = width/2;
+      y = height/2;
+      s1 = 0;
+      s2 = 0;
       dx = dx * -1;
-      s2 += 1;
     }
     if (y > height-r || y < r) {
       dy = dy * -1;
@@ -36,11 +38,13 @@ class Ball extends GameElement {
     
     // Bounce when touching the bat; gap from margin: 50; height of bat: 20
     if (x == margin + thickness + r && y > a1.y && y < a1.y + len1) {
-      dx = dx * -1;
+      dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
+      dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s1 += 1;
     }
     if (x == width - margin - thickness - r && y > a2.y && y < a2.y + len2) {
-      dx = dx * -1;
+      dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
+      dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s2 += 1;
     }
   }

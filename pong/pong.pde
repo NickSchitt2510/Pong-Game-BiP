@@ -12,17 +12,19 @@ int thickness; // h
 int margin; // m
 // Ball variables
 int r; // radius
+float speed;
 
 
 void setup() {
   size(1000,600);
   // set up for bats
   // length = 120;
-  len1 = 120;
-  len2 = 120;
+  len1 = 140;
+  len2 = 140;
   thickness = 20;
   margin = 50;
   r = 10;
+  speed = 0;
 
   myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
@@ -50,21 +52,37 @@ void draw() {
   // ball color change every 10 balls after 30 balls
   color newColor = ballColorChange();
   b1.c = newColor;
-  // println("b1.x: "+b1.x);
-  // println("b1.y: "+b1.y);
+  changeBallSpeed();
+  println("s1+s2: "+int(s1+s2));
+  println("speed: "+speed);
 
-  // println("b1.dx: "+b1.dx);
-  // println("b1.dy: "+b1.dy);
+  println("b1.dx: "+b1.dx);
+  println("b1.dy: "+b1.dy);
 
-  // Shrinking bats when player scores
-  int newLen1 = len2 - min(int(s1)/5*20, 80);
-  int newLen2 = len1 - min(int(s2)/5*20, 80);
+
+  // Shrinking bats after 30 total scores when player scores
+  int newLen1 = len2 - min(int(s1)/5*10, 100);
+  int newLen2 = len1 - min(int(s2)/5*10, 100);
   a1.w = newLen1;
   a2.w = newLen2;
+  println("newLen1: "+newLen1);
   
 
   a1.handle();
   a2.handle();
+}
+
+void changeBallSpeed() {
+  if (s1+s2 == 5) {
+    speed = 1;
+  } else if (s1+s2 == 10) {
+    speed = 1;
+  } else if (s1+s2 == 50) {
+    speed = 1;
+  } else {
+    speed = 0;
+  }
+
 }
 
 color ballColorChange() {

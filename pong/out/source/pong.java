@@ -20,7 +20,6 @@ Bat a1, a2;
 PFont myFont; // Declare a PFont variable
 
 int s1, s2; // Scores
-float dxInitial, dyInitial;
 
 // Bat constant
 // int length;
@@ -30,17 +29,19 @@ int thickness; // h
 int margin; // m
 // Ball variables
 int r; // radius
+float speed;
 
 
 public void setup() {
   /* size commented out by preprocessor */;
   // set up for bats
   // length = 120;
-  len1 = 120;
-  len2 = 120;
+  len1 = 140;
+  len2 = 140;
   thickness = 20;
   margin = 50;
   r = 10;
+  speed = 0;
 
   myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
@@ -68,21 +69,37 @@ public void draw() {
   // ball color change every 10 balls after 30 balls
   int newColor = ballColorChange();
   b1.c = newColor;
-  // println("b1.x: "+b1.x);
-  // println("b1.y: "+b1.y);
+  changeBallSpeed();
+  println("s1+s2: "+PApplet.parseInt(s1+s2));
+  println("speed: "+speed);
 
-  // println("b1.dx: "+b1.dx);
-  // println("b1.dy: "+b1.dy);
+  println("b1.dx: "+b1.dx);
+  println("b1.dy: "+b1.dy);
 
-  // Shrinking bats when player scores
-  int newLen1 = len2 - min(PApplet.parseInt(s1)/5*20, 80);
-  int newLen2 = len1 - min(PApplet.parseInt(s2)/5*20, 80);
+
+  // Shrinking bats after 30 total scores when player scores
+  int newLen1 = len2 - min(PApplet.parseInt(s1)/5*10, 100);
+  int newLen2 = len1 - min(PApplet.parseInt(s2)/5*10, 100);
   a1.w = newLen1;
   a2.w = newLen2;
+  println("newLen1: "+newLen1);
   
 
   a1.handle();
   a2.handle();
+}
+
+public void changeBallSpeed() {
+  if (s1+s2 == 5) {
+    speed = 1;
+  } else if (s1+s2 == 10) {
+    speed = 1;
+  } else if (s1+s2 == 50) {
+    speed = 1;
+  } else {
+    speed = 0;
+  }
+
 }
 
 public int ballColorChange() {
@@ -149,7 +166,7 @@ class Ball extends GameElement {
 
   // Constructors
   Ball (float x, float y, float r) {
-    super(x, y, 3, 3, color(255));
+    super(x, y, 4, 4, color(255));
     this.r = r;
   }
 
@@ -163,17 +180,19 @@ class Ball extends GameElement {
     // Border check
     if (x > width-r) {
       // reset
-      // x = width/2;
-      // y = height/2;
+      x = width/2;
+      y = height/2;
+      s1 = 0;
+      s2 = 0;
       dx = dx * -1;
-      s1 += 1;
     }
     if (x < r) {
       // reset
-      // x = width/2;
-      // y = height/2;
+      x = width/2;
+      y = height/2;
+      s1 = 0;
+      s2 = 0;
       dx = dx * -1;
-      s2 += 1;
     }
     if (y > height-r || y < r) {
       dy = dy * -1;
@@ -181,11 +200,13 @@ class Ball extends GameElement {
     
     // Bounce when touching the bat; gap from margin: 50; height of bat: 20
     if (x == margin + thickness + r && y > a1.y && y < a1.y + len1) {
-      dx = dx * -1;
+      dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
+      dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s1 += 1;
     }
     if (x == width - margin - thickness - r && y > a2.y && y < a2.y + len2) {
-      dx = dx * -1;
+      dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
+      dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s2 += 1;
     }
   }
