@@ -2,10 +2,12 @@ Ball b1;
 Bat a1, a2;
 PFont myFont; // Declare a PFont variable
 
-int s1, s2;
+int s1, s2; // Scores
 
 // Bat constant
-int length; // w
+// int length;
+int len1; // w
+int len2; // w
 int thickness; // h
 int margin; // m
 // Ball variables
@@ -15,7 +17,9 @@ int r; // radius
 void setup() {
   size(1000,600);
   // set up for bats
-  length = 100;
+  // length = 120;
+  len1 = 120;
+  len2 = 120;
   thickness = 20;
   margin = 50;
   r = 10;
@@ -29,20 +33,26 @@ void setup() {
   // Reset score
   s1 = 0;
   s2 = 0;
-
-  a1 = new Bat(margin, height/2, length, thickness);
-  // change default color
-  a2 = new Bat(width-margin, height/2, length, thickness);
+  
+  a1 = new Bat(margin, height/2, len1, thickness);
+  a2 = new Bat(width-margin, height/2, len2, thickness);
 }
 
 void draw() {
   background(0);
 
+  // Console style
   plotMiddleLine();
   plotScores();
 
-
+  // Object
   b1.handle();
+
+  // Shrinking bats
+  int newLen1 = len2 - min(int(s1)/4*20, 80);
+  int newLen2 = len1 - min(int(s2)/4*20, 80);
+  a1.w = newLen1;
+  a2.w = newLen2;
 
   a1.handle();
   a2.handle();
@@ -70,7 +80,7 @@ void keyPressed() {
   if (key == 'w' && a1.y > 0) {
     a1.dy = -5;
   }
-  else if (key == 's' && a1.y < height - length) {
+  else if (key == 's' && a1.y < height - len1) {
     a1.dy = 5;
   }
 
@@ -78,7 +88,7 @@ void keyPressed() {
   if (keyCode == UP && a2.y > 0) {
     a2.dy = -5;
   }
-  else if (keyCode == DOWN && a2.y < width - length) {
+  else if (keyCode == DOWN && a2.y < width - len2) {
     a2.dy = 5;
   }
 }
