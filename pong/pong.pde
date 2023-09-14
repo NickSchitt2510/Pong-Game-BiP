@@ -47,23 +47,9 @@ void draw() {
   // Object
   b1.handle();
   
-  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
-  if (s1+s2 > 30) {
-    color newColor = 115;
-    b1.c = newColor;
-  }
-  if (s1+s2 > 35) {
-    color newColor = 115-25;
-    b1.c = newColor;
-  }
-  if (s1+s2 > 40) {
-    color newColor = 115-25*2;
-    b1.c = newColor;
-  }
-  if (s1+s2 > 45) {
-    color newColor = 115-25*3;
-    b1.c = newColor;
-  }
+  // ball color change every 10 balls after 30 balls
+  color newColor = ballColorChange();
+  b1.c = newColor;
 
   // Shrinking bats when player scores
   int newLen1 = len2 - min(int(s1)/5*20, 80);
@@ -74,6 +60,21 @@ void draw() {
 
   a1.handle();
   a2.handle();
+}
+
+color ballColorChange() {
+  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
+  color newColor = 255;
+  if (s1+s2 > 30) {
+    newColor = 115;
+  }
+  if (s1+s2 > 40) {
+    newColor = 75;
+  }
+  if (s1+s2 > 50) {
+    newColor = 34;
+  }
+  return newColor;
 }
 
 

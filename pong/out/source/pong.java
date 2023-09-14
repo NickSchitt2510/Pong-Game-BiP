@@ -64,23 +64,8 @@ public void draw() {
   // Object
   b1.handle();
   
-  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
-  if (s1+s2 > 20) {
-    int newColor = 115;
-    b1.c = newColor;
-  }
-  if (s1+s2 > 25) {
-    int newColor = 115-25;
-    b1.c = newColor;
-  }
-  if (s1+s2 > 30) {
-    int newColor = 115-25*2;
-    b1.c = newColor;
-  }
-  if (s1+s2 > 35) {
-    int newColor = 115-25*3;
-    b1.c = newColor;
-  }
+  int newColor = ballColorChange();
+  b1.c = newColor;
 
   // Shrinking bats when player scores
   int newLen1 = len2 - min(PApplet.parseInt(s1)/5*20, 80);
@@ -91,6 +76,24 @@ public void draw() {
 
   a1.handle();
   a2.handle();
+}
+
+public int ballColorChange() {
+  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
+  int newColor = 255;
+  if (s1+s2 > 1) {
+    newColor = 150;
+  }
+  if (s1+s2 > 2) {
+    newColor = 120;
+  }
+  if (s1+s2 > 3) {
+    newColor = 90;
+  }
+  if (s1+s2 > 4) {
+    newColor = 30;
+  }
+  return newColor;
 }
 
 
@@ -261,25 +264,6 @@ class GameElement {
   public void reactToBorders() {}
 
   public void plot() {}
-}
-class randomBall extends Ball {
-
-  randomBall (float x, float y, float r) {
-    super(x, y, r);
-    // dx = amplitude * sin(angle);
-    // dy = amplitude * sin(angle);
-  }
-
-  public void move() {
-
-    float ranDX = random(-5, 5);
-    float ranDY = random(-5, 5);
-
-
-    x = x + dx;
-    y = y + dy;
-
-  }
 }
 
 
