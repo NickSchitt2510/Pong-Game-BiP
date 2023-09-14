@@ -20,6 +20,7 @@ Bat a1, a2;
 PFont myFont; // Declare a PFont variable
 
 int s1, s2; // Scores
+float dxInitial, dyInitial;
 
 // Bat constant
 // int length;
@@ -51,7 +52,7 @@ public void setup() {
   s2 = 0;
   
   a1 = new Bat(margin, height/2, len1, thickness);
-  a2 = new Bat(width-margin, height/2, len2, thickness);
+  a2 = new Bat(width-margin-thickness, height/2, len2, thickness);
 }
 
 public void draw() {
@@ -64,15 +65,21 @@ public void draw() {
   // Object
   b1.handle();
   
+  // ball color change every 10 balls after 30 balls
   int newColor = ballColorChange();
   b1.c = newColor;
+  // println("b1.x: "+b1.x);
+  // println("b1.y: "+b1.y);
+
+  // println("b1.dx: "+b1.dx);
+  // println("b1.dy: "+b1.dy);
 
   // Shrinking bats when player scores
   int newLen1 = len2 - min(PApplet.parseInt(s1)/5*20, 80);
   int newLen2 = len1 - min(PApplet.parseInt(s2)/5*20, 80);
   a1.w = newLen1;
   a2.w = newLen2;
-
+  
 
   a1.handle();
   a2.handle();
@@ -81,17 +88,14 @@ public void draw() {
 public int ballColorChange() {
   // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
   int newColor = 255;
-  if (s1+s2 > 1) {
-    newColor = 150;
+  if (s1+s2 > 30) {
+    newColor = 115;
   }
-  if (s1+s2 > 2) {
-    newColor = 120;
+  if (s1+s2 > 40) {
+    newColor = 75;
   }
-  if (s1+s2 > 3) {
-    newColor = 90;
-  }
-  if (s1+s2 > 4) {
-    newColor = 30;
+  if (s1+s2 > 50) {
+    newColor = 34;
   }
   return newColor;
 }
@@ -145,7 +149,7 @@ class Ball extends GameElement {
 
   // Constructors
   Ball (float x, float y, float r) {
-    super(x, y, 5, 5, color(255));
+    super(x, y, 3, 3, color(255));
     this.r = r;
   }
 
@@ -159,14 +163,16 @@ class Ball extends GameElement {
     // Border check
     if (x > width-r) {
       // reset
-      x = width/2;
-      y = height/2;
+      // x = width/2;
+      // y = height/2;
+      dx = dx * -1;
       s1 += 1;
     }
     if (x < r) {
       // reset
-      x = width/2;
-      y = height/2;
+      // x = width/2;
+      // y = height/2;
+      dx = dx * -1;
       s2 += 1;
     }
     if (y > height-r || y < r) {
@@ -178,7 +184,7 @@ class Ball extends GameElement {
       dx = dx * -1;
       s1 += 1;
     }
-    if (x == width - margin - r && y > a2.y && y < a2.y + len2) {
+    if (x == width - margin - thickness - r && y > a2.y && y < a2.y + len2) {
       dx = dx * -1;
       s2 += 1;
     }

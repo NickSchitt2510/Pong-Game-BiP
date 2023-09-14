@@ -4,7 +4,7 @@ class Ball extends GameElement {
 
   // Constructors
   Ball (float x, float y, float r) {
-    super(x, y, 5, 5, color(255));
+    super(x, y, 3, 3, color(255));
     this.r = r;
   }
 
@@ -18,14 +18,16 @@ class Ball extends GameElement {
     // Border check
     if (x > width-r) {
       // reset
-      x = width/2;
-      y = height/2;
+      // x = width/2;
+      // y = height/2;
+      dx = dx * -1;
       s1 += 1;
     }
     if (x < r) {
       // reset
-      x = width/2;
-      y = height/2;
+      // x = width/2;
+      // y = height/2;
+      dx = dx * -1;
       s2 += 1;
     }
     if (y > height-r || y < r) {
@@ -37,7 +39,7 @@ class Ball extends GameElement {
       dx = dx * -1;
       s1 += 1;
     }
-    if (x == width - margin - r && y > a2.y && y < a2.y + len2) {
+    if (x == width - margin - thickness - r && y > a2.y && y < a2.y + len2) {
       dx = dx * -1;
       s2 += 1;
     }

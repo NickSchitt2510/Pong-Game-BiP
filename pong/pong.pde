@@ -34,7 +34,7 @@ void setup() {
   s2 = 0;
   
   a1 = new Bat(margin, height/2, len1, thickness);
-  a2 = new Bat(width-margin, height/2, len2, thickness);
+  a2 = new Bat(width-margin-thickness, height/2, len2, thickness);
 }
 
 void draw() {
@@ -50,13 +50,18 @@ void draw() {
   // ball color change every 10 balls after 30 balls
   color newColor = ballColorChange();
   b1.c = newColor;
+  // println("b1.x: "+b1.x);
+  // println("b1.y: "+b1.y);
+
+  // println("b1.dx: "+b1.dx);
+  // println("b1.dy: "+b1.dy);
 
   // Shrinking bats when player scores
   int newLen1 = len2 - min(int(s1)/5*20, 80);
   int newLen2 = len1 - min(int(s2)/5*20, 80);
   a1.w = newLen1;
   a2.w = newLen2;
-
+  
 
   a1.handle();
   a2.handle();
