@@ -31,7 +31,7 @@ class Bat extends GameElement {
         x = width - margin * 2;
       }
       if (x > width - thickness) {
-        x = width + thickness;
+        x = width - thickness;
       }
     }
   }

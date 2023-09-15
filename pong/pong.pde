@@ -24,7 +24,7 @@ void setup() {
   len1 = 140;
   len2 = 140;
   thickness = 20;
-  margin = 50;
+  margin = 80;
   r = 10;
   speed = 0;
 
@@ -59,6 +59,9 @@ void draw() {
   // Shrinking bats after 30 total scores when player scores
   int newLen1 = len2 - min(int(s1)/5*10, 100);
   int newLen2 = len1 - min(int(s2)/5*10, 100);
+
+  println("a1.x: "+a1.x);
+  println("a2.x: "+a2.x);
   
   a1.w = newLen1;
   a2.w = newLen2;
@@ -75,10 +78,11 @@ void changeBallSpeed() {
     speed = 1;
   } else if (s1+s2 == 35) {
     speed = 1;
+  } else if (s1+s2 == 40) {
+    speed = 1;
   } else {
     speed = 0;
   }
-
 }
 
 color ballColorChange() {

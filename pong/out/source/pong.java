@@ -41,7 +41,7 @@ public void setup() {
   len1 = 140;
   len2 = 140;
   thickness = 20;
-  margin = 50;
+  margin = 80;
   r = 10;
   speed = 0;
 
@@ -76,6 +76,9 @@ public void draw() {
   // Shrinking bats after 30 total scores when player scores
   int newLen1 = len2 - min(PApplet.parseInt(s1)/5*10, 100);
   int newLen2 = len1 - min(PApplet.parseInt(s2)/5*10, 100);
+
+  println("a1.x: "+a1.x);
+  println("a2.x: "+a2.x);
   
   a1.w = newLen1;
   a2.w = newLen2;
@@ -92,10 +95,11 @@ public void changeBallSpeed() {
     speed = 1;
   } else if (s1+s2 == 35) {
     speed = 1;
+  } else if (s1+s2 == 40) {
+    speed = 1;
   } else {
     speed = 0;
   }
-
 }
 
 public int ballColorChange() {
@@ -258,7 +262,7 @@ class Bat extends GameElement {
         x = width - margin * 2;
       }
       if (x > width - thickness) {
-        x = width + thickness;
+        x = width - thickness;
       }
     }
   }
