@@ -2,11 +2,13 @@ class Bat extends GameElement {
   float w;
   float h;
 
+
   Bat (float x, float y, float w, float h) {
     super(x, y);
     this.w = w;
     this.h = h;
   }
+
 
   void reactToBorders() {
     // Ensure the bat stays within the vertical bounds
@@ -34,6 +36,7 @@ class Bat extends GameElement {
       }
     }
   }
+
 
   void plot() {
     fill(c);

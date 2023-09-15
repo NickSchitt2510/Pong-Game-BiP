@@ -24,7 +24,6 @@ void setup() {
 }
 
 
-
 void draw() {
   // Game console style
   background(0);
@@ -39,6 +38,7 @@ void draw() {
   a1.handle();
   a2.handle();
 }
+
 
 void resetGame() {
   b1 = new Ball(width/2, height*3/4, r);
@@ -55,6 +55,7 @@ void plotMiddleLine() {
     rect(width/2-2.5, 10+20*i, 5, 20);
   }
 }
+
 
 void plotScores() {
   fill(255); // Text color (white)
@@ -76,6 +77,7 @@ void changeBallColor() {
   }
 }
 
+
 void changeBallSpeed() {
   // Adjust ball speed based on total scores
   if (s1+s2 >= 5 && s1+s2 <= 40 && s1+s2 % 5 == 0) {
@@ -85,6 +87,7 @@ void changeBallSpeed() {
   }
 }
 
+
 void shrinkBats() {
   // Shrink player's bat after player scores every 5 points
   int newLen1 = len2 - min(int(s1) / 5 * 10, 80);
@@ -92,6 +95,7 @@ void shrinkBats() {
   a1.w = newLen1;
   a2.w = newLen2;
 }
+
 
 void keyPressed() {
   // Left bar control
@@ -119,6 +123,7 @@ void keyPressed() {
     a2.dx = -5;
   }
 }
+
 
 void keyReleased() {
   if (key == 'w' || key == 's') {
