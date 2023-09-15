@@ -39,13 +39,15 @@ int margin = 70; // Margin from edges
 int r = 10; // Radius
 int speed = 0; // speed for fast ball
 
+// Game state variable
+boolean gameEnded = false;
+
 
 public void setup() {
   /* size commented out by preprocessor */;
   myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
   resetGame();
-
 }
 
 
@@ -90,6 +92,11 @@ public void plotScores() {
   text(s1, width / 2 - 100, 100);
   textAlign(RIGHT);
   text(s2, width / 2 + 100, 100);
+  textSize(24);
+  textAlign(CENTER);
+  text("Player 1", width / 2 - 100, 50);
+  textAlign(CENTER);
+  text("Player 2", width / 2 + 100, 50);
 }
 
 
@@ -126,13 +133,13 @@ public void changeBallColor() {
 
 public void changeBallSpeed() {
   // Adjust ball speed based on total scores
-  if (s1+s2 >= 5) {
+  if (s1+s2 == 5) {
     speed = 1;
     speedLevel = 1;
   } else if (s1+s2 == 10) {
     speed = 1;
     speedLevel = 2;
-  } else if (s1+s2 == 15) {
+  } else if (s1+s2 == 30) {
     speed = 1;
     speedLevel = 3;
   } else if (s1+s2 == 40) {
@@ -195,6 +202,16 @@ public void keyReleased() {
     a2.dx = 0;
   } 
 }
+
+public void displayGameResult() {
+  fill(255);
+  textSize(48);
+  textAlign(CENTER);
+
+  // if(s1 > s2) {
+
+  // }
+}
 class Ball extends GameElement {
   // Fields
   float r; // radius
@@ -249,6 +266,7 @@ class Ball extends GameElement {
     s2 = 0;
     dx = 4 * randomValue * -1;
     dy = 4 * randomValue;
+    c = 255;
   }
 
   // Reset level

@@ -52,6 +52,7 @@ class Ball extends GameElement {
     s2 = 0;
     dx = 4 * randomValue * -1;
     dy = 4 * randomValue;
+    c = 255;
   }
 
   // Reset level

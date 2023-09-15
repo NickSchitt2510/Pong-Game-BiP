@@ -22,13 +22,15 @@ int margin = 70; // Margin from edges
 int r = 10; // Radius
 int speed = 0; // speed for fast ball
 
+// Game state variable
+boolean gameEnded = false;
+
 
 void setup() {
   size(1000,600);
   myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
   resetGame();
-
 }
 
 
@@ -73,6 +75,11 @@ void plotScores() {
   text(s1, width / 2 - 100, 100);
   textAlign(RIGHT);
   text(s2, width / 2 + 100, 100);
+  textSize(24);
+  textAlign(CENTER);
+  text("Player 1", width / 2 - 100, 50);
+  textAlign(CENTER);
+  text("Player 2", width / 2 + 100, 50);
 }
 
 
@@ -115,7 +122,7 @@ void changeBallSpeed() {
   } else if (s1+s2 == 10) {
     speed = 1;
     speedLevel = 2;
-  } else if (s1+s2 == 15) {
+  } else if (s1+s2 == 30) {
     speed = 1;
     speedLevel = 3;
   } else if (s1+s2 == 40) {
@@ -177,4 +184,14 @@ void keyReleased() {
   } else if (keyCode == LEFT || keyCode == RIGHT) {
     a2.dx = 0;
   } 
+}
+
+void displayGameResult() {
+  fill(255);
+  textSize(48);
+  textAlign(CENTER);
+
+  // if(s1 > s2) {
+
+  // }
 }
