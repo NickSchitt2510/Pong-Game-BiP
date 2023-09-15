@@ -52,6 +52,7 @@ public void setup() {
 
 
 public void draw() {
+  if (!gameEnded) {
   // Game console style
   background(0);
   plotMiddleLine();
@@ -65,6 +66,9 @@ public void draw() {
   shrinkBats();
   a1.handle();
   a2.handle();
+  } else {
+    displayGameResult();
+  }
 }
 
 
@@ -204,13 +208,19 @@ public void keyReleased() {
 }
 
 public void displayGameResult() {
+  fill(0);
+  rect(width/4, height/4, width/2, height/2);
   fill(255);
   textSize(48);
   textAlign(CENTER);
+  if(s1 > s2) {
+    text("Player 1 Wins!", width / 2, height / 2);
+  } else if (s2 > s1) {
+    text("Player 2 Wins!", width / 2, height / 2);
+  } else {
+    text("It's a Tie!", width / 2, height / 2);
+  }
 
-  // if(s1 > s2) {
-
-  // }
 }
 class Ball extends GameElement {
   // Fields
@@ -235,12 +245,14 @@ class Ball extends GameElement {
 
     // Border check
     if (x > width) {
-      resetBall(randomValue);
-      resetLevel();
+      gameEnded = true;
+      // resetBall(randomValue);
+      // resetLevel();
     }
     if (x < 0 - r) {
-      resetBall(randomValue);
-      resetLevel();
+      gameEnded = true;
+      // resetBall(randomValue);
+      // resetLevel();
     }
     if (y > height - r || y < r) {
       dy = dy * -1;

@@ -21,12 +21,10 @@ class Ball extends GameElement {
 
     // Border check
     if (x > width) {
-      resetBall(randomValue);
-      resetLevel();
+      gameEnded = true;
     }
     if (x < 0 - r) {
-      resetBall(randomValue);
-      resetLevel();
+      gameEnded = true;
     }
     if (y > height - r || y < r) {
       dy = dy * -1;
