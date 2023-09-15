@@ -9,7 +9,7 @@ class Bat extends GameElement {
   }
 
   void reactToBorders() {
-    // out of bound -> reset
+    // Ensure the bat stays within the vertical bounds
     if (y < 0) {
       y = 0;
     }
@@ -17,17 +17,16 @@ class Bat extends GameElement {
       y = height - w;
     }
 
-    // left bar
-    if (x < width/2) {
+    // Adjust horizontal position based on which bar (left or right)
+    if (x < width / 2) { // Left bar
       if (x < 0) {
         x = 0;
       }
       if (x > margin * 2 - thickness) {
         x = margin * 2 - thickness;
       }
-    // right bar
-    } else { 
-      if (x > width/2 && x < width - margin * 2) {
+    } else { // right bar
+      if (x > width / 2 && x < width - margin * 2) {
         x = width - margin * 2;
       }
       if (x > width - thickness) {
