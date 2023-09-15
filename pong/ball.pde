@@ -42,12 +42,12 @@ class Ball extends GameElement {
     }
     
     // Bounce when touching the bat; gap from margin: 50; height of bat: 20
-    if (x <= a1.x + thickness + r && y > a1.y && y < a1.y + len1) {
+    if (x >= a1.x + thickness + r + dx && x <= a1.x + thickness + r && y > a1.y && y < a1.y + len1) {
       dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
       dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s1 += 1;
     }
-    if (x == width - margin - thickness - r && y > a2.y && y < a2.y + len2) {
+    if (x >= a2.x - r -dx && x <= a2.x - r && y > a2.y && y < a2.y + len2) {
       dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
       dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s2 += 1;

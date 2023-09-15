@@ -122,19 +122,22 @@ void keyPressed() {
   else if (key == 's' && a1.y < height - len1) {
     a1.dy = 5;
   }
-  else if (key == 'a' && a1.y < height - len1) {
+  else if (key == 'a') {
     a1.dx = -5;
   }
-  else if (key == 'd' && a1.y < height - len1) {
+  else if (key == 'd') {
     a1.dx = 5;
   }
 
   // Right bar control
   if (keyCode == UP && a2.y > 0) {
     a2.dy = -5;
-  }
-  else if (keyCode == DOWN && a2.y < width - len2) {
+  } else if (keyCode == DOWN && a2.y < width - len2) {
     a2.dy = 5;
+  } else if (keyCode == RIGHT) {
+    a2.dx = 5;
+  } else if (keyCode == LEFT) {
+    a2.dx = -5;
   }
 }
 
@@ -145,5 +148,7 @@ void keyReleased() {
     a1.dx = 0;
   } else if (keyCode == UP || keyCode == DOWN) {
     a2.dy = 0;
+  } else if (keyCode == LEFT || keyCode == RIGHT) {
+    a2.dx = 0;
   } 
 }

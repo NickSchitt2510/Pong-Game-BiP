@@ -76,8 +76,7 @@ public void draw() {
   // Shrinking bats after 30 total scores when player scores
   int newLen1 = len2 - min(PApplet.parseInt(s1)/5*10, 100);
   int newLen2 = len1 - min(PApplet.parseInt(s2)/5*10, 100);
-  println("a1.x: "+PApplet.parseInt(a1.x + thickness + r));
-  println("a1.y: "+a1.x);
+  
   a1.w = newLen1;
   a2.w = newLen2;
   
@@ -140,19 +139,22 @@ public void keyPressed() {
   else if (key == 's' && a1.y < height - len1) {
     a1.dy = 5;
   }
-  else if (key == 'a' && a1.y < height - len1) {
+  else if (key == 'a') {
     a1.dx = -5;
   }
-  else if (key == 'd' && a1.y < height - len1) {
+  else if (key == 'd') {
     a1.dx = 5;
   }
 
   // Right bar control
   if (keyCode == UP && a2.y > 0) {
     a2.dy = -5;
-  }
-  else if (keyCode == DOWN && a2.y < width - len2) {
+  } else if (keyCode == DOWN && a2.y < width - len2) {
     a2.dy = 5;
+  } else if (keyCode == RIGHT) {
+    a2.dx = 5;
+  } else if (keyCode == LEFT) {
+    a2.dx = -5;
   }
 }
 
@@ -163,6 +165,8 @@ public void keyReleased() {
     a1.dx = 0;
   } else if (keyCode == UP || keyCode == DOWN) {
     a2.dy = 0;
+  } else if (keyCode == LEFT || keyCode == RIGHT) {
+    a2.dx = 0;
   } 
 }
 class Ball extends GameElement {
@@ -209,12 +213,12 @@ class Ball extends GameElement {
     }
     
     // Bounce when touching the bat; gap from margin: 50; height of bat: 20
-    if (x <= a1.x + thickness + r && y > a1.y && y < a1.y + len1) {
+    if (x >= a1.x + thickness + r + dx && x <= a1.x + thickness + r && y > a1.y && y < a1.y + len1) {
       dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
       dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s1 += 1;
     }
-    if (x == width - margin - thickness - r && y > a2.y && y < a2.y + len2) {
+    if (x >= a2.x - r -dx && x <= a2.x - r && y > a2.y && y < a2.y + len2) {
       dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
       dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s2 += 1;
@@ -240,12 +244,21 @@ class Bat extends GameElement {
       y = height - w;
     }
 
+    // left bar
     if (x < width/2) {
       if (x < 0) {
         x = 0;
       }
       if (x > margin * 2 - thickness) {
         x = margin * 2 - thickness;
+      }
+    // right bar
+    } else { 
+      if (x > width/2 && x < width - margin * 2) {
+        x = width - margin * 2;
+      }
+      if (x > width - thickness) {
+        x = width + thickness;
       }
     }
   }

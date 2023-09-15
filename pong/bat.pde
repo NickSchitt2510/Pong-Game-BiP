@@ -17,12 +17,21 @@ class Bat extends GameElement {
       y = height - w;
     }
 
+    // left bar
     if (x < width/2) {
       if (x < 0) {
         x = 0;
       }
       if (x > margin * 2 - thickness) {
         x = margin * 2 - thickness;
+      }
+    // right bar
+    } else { 
+      if (x > width/2 && x < width - margin * 2) {
+        x = width - margin * 2;
+      }
+      if (x > width - thickness) {
+        x = width + thickness;
       }
     }
   }
