@@ -16,6 +16,15 @@ class Bat extends GameElement {
     if (y > height - w) {
       y = height - w;
     }
+
+    if (x < width/2) {
+      if (x < 0) {
+        x = 0;
+      }
+      if (x > margin * 2 - thickness) {
+        x = margin * 2 - thickness;
+      }
+    }
   }
 
   void plot() {

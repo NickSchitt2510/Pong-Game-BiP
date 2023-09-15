@@ -1,18 +1,20 @@
 Ball b1;
 Bat a1, a2;
-PFont myFont; // Declare a PFont variable
 
-int s1, s2; // Scores
+// Declare a PFont variable
+PFont myFont;
+// Scores variable
+int s1, s2;
 
-// Bat constant
-// int length;
+// Bats constant
 int len1; // w
 int len2; // w
 int thickness; // h
 int margin; // m
+
 // Ball variables
 int r; // radius
-float speed;
+int speed;
 
 
 void setup() {
@@ -52,20 +54,14 @@ void draw() {
   // ball color change every 10 balls after 30 balls
   color newColor = ballColorChange();
   b1.c = newColor;
-  changeBallSpeed();
-  println("s1+s2: "+int(s1+s2));
-  println("speed: "+speed);
-
-  println("b1.dx: "+b1.dx);
-  println("b1.dy: "+b1.dy);
-
+  changeBallSpeed();;
 
   // Shrinking bats after 30 total scores when player scores
   int newLen1 = len2 - min(int(s1)/5*10, 100);
   int newLen2 = len1 - min(int(s2)/5*10, 100);
+  
   a1.w = newLen1;
   a2.w = newLen2;
-  println("newLen1: "+newLen1);
   
 
   a1.handle();
@@ -75,9 +71,9 @@ void draw() {
 void changeBallSpeed() {
   if (s1+s2 == 5) {
     speed = 1;
-  } else if (s1+s2 == 10) {
+  } else if (s1+s2 == 30) {
     speed = 1;
-  } else if (s1+s2 == 50) {
+  } else if (s1+s2 == 35) {
     speed = 1;
   } else {
     speed = 0;
@@ -88,14 +84,14 @@ void changeBallSpeed() {
 color ballColorChange() {
   // Ball color change darler every 5 total scores after player scores when total players' scores reaches 20 
   color newColor = 255;
-  if (s1+s2 > 30) {
+  if (s1+s2 > 15) {
     newColor = 115;
   }
-  if (s1+s2 > 40) {
-    newColor = 75;
+  if (s1+s2 > 20) {
+    newColor = 60;
   }
-  if (s1+s2 > 50) {
-    newColor = 34;
+  if (s1+s2 > 25) {
+    newColor = 30;
   }
   return newColor;
 }
@@ -126,6 +122,12 @@ void keyPressed() {
   else if (key == 's' && a1.y < height - len1) {
     a1.dy = 5;
   }
+  else if (key == 'a' && a1.y < height - len1) {
+    a1.dx = -5;
+  }
+  else if (key == 'd' && a1.y < height - len1) {
+    a1.dx = 5;
+  }
 
   // Right bar control
   if (keyCode == UP && a2.y > 0) {
@@ -139,6 +141,8 @@ void keyPressed() {
 void keyReleased() {
   if (key == 'w' || key == 's') {
     a1.dy = 0;
+  } else if (key == 'a' || key == 'd') {
+    a1.dx = 0;
   } else if (keyCode == UP || keyCode == DOWN) {
     a2.dy = 0;
   } 

@@ -10,22 +10,8 @@ class GameElement {
   // we can just enter default value 0 in childxP
   GameElement(float x, float y, float dx, float dy, color c) {
     // QA for x and y coordination
-    if (x > width) {
-      this.x = width - r;
-    } else if (x < 0) {
-      this.x = r;
-    } else {
-      this.x = x;
-    }
-
-    if (y > height) {
-      this.y = height - r;
-    } else if (y < 0) {
-      this.y = r;
-    } else {
-      this.y = y;
-    }
-
+    this.x = x;
+    this.y = y;
     this.dx = dx;
     this.dy = dy;
     this.c = c;

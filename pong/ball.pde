@@ -15,21 +15,26 @@ class Ball extends GameElement {
   }
 
   void reactToBorders() {
+    int randomValue = (random(2) > 1 ? 1 : -1);
     // Border check
-    if (x > width-r) {
+    if (x > width) {
       // reset
       x = width/2;
       y = height/2;
       s1 = 0;
       s2 = 0;
+      dx = 4;
+      dy = 4 * randomValue;
       dx = dx * -1;
     }
-    if (x < r) {
+    if (x < 0-r) {
       // reset
       x = width/2;
       y = height/2;
       s1 = 0;
       s2 = 0;
+      dx = -4;
+      dy = 4 * randomValue;
       dx = dx * -1;
     }
     if (y > height-r || y < r) {
@@ -37,7 +42,7 @@ class Ball extends GameElement {
     }
     
     // Bounce when touching the bat; gap from margin: 50; height of bat: 20
-    if (x == margin + thickness + r && y > a1.y && y < a1.y + len1) {
+    if (x <= a1.x + thickness + r && y > a1.y && y < a1.y + len1) {
       dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
       dy = (dy > 0) ? (dy + speed) : (dy - speed);
       s1 += 1;
