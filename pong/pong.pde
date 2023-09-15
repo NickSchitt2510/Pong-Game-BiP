@@ -1,22 +1,24 @@
 Ball b1;
 Bat a1, a2;
 
-PFont myFont; // Declare a PFont variable
-int s1, s2; // Scores variable
-// Bats constant
-int len1 = 140; // left bat length
-int len2 = 140; // right bat length
-int thickness = 20; // bat width
-int margin = 70;
-// Ball variables
-int r = 10; // radius
+PFont myFont; // Font variable for text
+
+int s1, s2; // Scores variables
+
+// Constants for bats
+int len1 = 140; // Left bat length
+int len2 = 140; // Right bat length
+int thickness = 20; // Bat width
+int margin = 70; // Margin from edges
+
+// Constants for ball
+int r = 10; // Radius
 int speed = 0; // speed for fast ball
 
 
 void setup() {
   size(1000,600);
-  // Load the built-in font with size 32
-  myFont = createFont("Courier", 32); 
+  myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
   resetGame();
 }
@@ -29,12 +31,10 @@ void draw() {
   plotMiddleLine();
   plotScores();
 
-  // Object ball
+  // Handle objects
   b1.handle();
   changeBallColor();
   changeBallSpeed();
-
-  // Object bats
   shrinkBats();
   a1.handle();
   a2.handle();
@@ -42,8 +42,7 @@ void draw() {
 
 void resetGame() {
   b1 = new Ball(width/2, height*3/4, r);
-  // Reset score
-  s1 = 0;
+  s1 = 0; // Reset score
   s2 = 0;
   a1 = new Bat(margin, height/2, len1, thickness);
   a2 = new Bat(width-margin-thickness, height/2, len2, thickness);
@@ -65,7 +64,7 @@ void plotScores() {
 
 
 void changeBallColor() {
-  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 15
+  // Ball color darkens every 5 total scores after players' scores reach 15
   if (s1+s2 > 15) {
     b1.c = 115;
   }
@@ -78,6 +77,7 @@ void changeBallColor() {
 }
 
 void changeBallSpeed() {
+  // Adjust ball speed based on total scores
   if (s1+s2 >= 5 && s1+s2 <= 40 && s1+s2 % 5 == 0) {
     speed = 1;
   } else {
@@ -86,7 +86,7 @@ void changeBallSpeed() {
 }
 
 void shrinkBats() {
-  // Shrinking bats after 30 total scores when player scores
+  // Shrink player's bat after player scores every 5 points
   int newLen1 = len2 - min(int(s1) / 5 * 10, 80);
   int newLen2 = len1 - min(int(s2) / 5 * 10, 80);
   a1.w = newLen1;

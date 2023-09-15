@@ -18,22 +18,24 @@ public class pong extends PApplet {
 Ball b1;
 Bat a1, a2;
 
-PFont myFont; // Declare a PFont variable
-int s1, s2; // Scores variable
-// Bats constant
-int len1 = 140; // left bat length
-int len2 = 140; // right bat length
-int thickness = 20; // bat width
-int margin = 70;
-// Ball variables
-int r = 10; // radius
+PFont myFont; // Font variable for text
+
+int s1, s2; // Scores variables
+
+// Constants for bats
+int len1 = 140; // Left bat length
+int len2 = 140; // Right bat length
+int thickness = 20; // Bat width
+int margin = 70; // Margin from edges
+
+// Constants for ball
+int r = 10; // Radius
 int speed = 0; // speed for fast ball
 
 
 public void setup() {
   /* size commented out by preprocessor */;
-  // Load the built-in font with size 32
-  myFont = createFont("Courier", 32); 
+  myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
   resetGame();
 }
@@ -46,12 +48,10 @@ public void draw() {
   plotMiddleLine();
   plotScores();
 
-  // Object ball
+  // Handle objects
   b1.handle();
   changeBallColor();
   changeBallSpeed();
-
-  // Object bats
   shrinkBats();
   a1.handle();
   a2.handle();
@@ -59,8 +59,7 @@ public void draw() {
 
 public void resetGame() {
   b1 = new Ball(width/2, height*3/4, r);
-  // Reset score
-  s1 = 0;
+  s1 = 0; // Reset score
   s2 = 0;
   a1 = new Bat(margin, height/2, len1, thickness);
   a2 = new Bat(width-margin-thickness, height/2, len2, thickness);
@@ -82,7 +81,7 @@ public void plotScores() {
 
 
 public void changeBallColor() {
-  // Ball color change darler every 5 total scores after player scores when total players' scores reaches 15
+  // Ball color darkens every 5 total scores after players' scores reach 15
   if (s1+s2 > 15) {
     b1.c = 115;
   }
@@ -95,6 +94,7 @@ public void changeBallColor() {
 }
 
 public void changeBallSpeed() {
+  // Adjust ball speed based on total scores
   if (s1+s2 >= 5 && s1+s2 <= 40 && s1+s2 % 5 == 0) {
     speed = 1;
   } else {
@@ -103,7 +103,7 @@ public void changeBallSpeed() {
 }
 
 public void shrinkBats() {
-  // Shrinking bats after 30 total scores when player scores
+  // Shrink player's bat after player scores every 5 points
   int newLen1 = len2 - min(PApplet.parseInt(s1) / 5 * 10, 80);
   int newLen2 = len1 - min(PApplet.parseInt(s2) / 5 * 10, 80);
   a1.w = newLen1;
@@ -166,42 +166,46 @@ class Ball extends GameElement {
 
   public void reactToBorders() {
     int randomValue = (random(2) > 1 ? 1 : -1);
+
     // Border check
     if (x > width) {
-      // reset
-      x = width/2;
-      y = height/2;
-      s1 = 0;
-      s2 = 0;
-      dx = 4;
-      dy = 4 * randomValue;
-      dx = dx * -1;
+      resetBall(randomValue);
     }
-    if (x < 0-r) {
-      // reset
-      x = width/2;
-      y = height/2;
-      s1 = 0;
-      s2 = 0;
-      dx = -4;
-      dy = 4 * randomValue;
-      dx = dx * -1;
+    if (x < 0 - r) {
+      resetBall(randomValue);
     }
-    if (y > height-r || y < r) {
+    if (y > height - r || y < r) {
       dy = dy * -1;
     }
     
-    // Bounce when touching the bat; gap from margin: 50; height of bat: 20
-    if (x >= a1.x + thickness + r + dx && x <= a1.x + thickness + r && y > a1.y && y < a1.y + len1) {
-      dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
-      dy = (dy > 0) ? (dy + speed) : (dy - speed);
+    // Bounce when touching the bat
+    if (x <= a1.x + thickness + r && x >= a1.x + thickness + r + dx && y > a1.y && y < a1.y + len1) {
+      adjustBallDirection(speed);
       s1 += 1;
     }
     if (x >= a2.x - r -dx && x <= a2.x - r && y > a2.y && y < a2.y + len2) {
-      dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
-      dy = (dy > 0) ? (dy + speed) : (dy - speed);
+      adjustBallDirection(speed);
       s2 += 1;
     }
+  }
+  // Reset the ball's position and scores
+  public void resetBall(int randomValue) {
+    x = width / 2;
+    y = height / 2;
+    s1 = 0;
+    s2 = 0;
+    dx = 4 * randomValue * -1;
+    dy = 4 * randomValue;
+  }
+
+  public boolean ballTouchesBat(float left, float right, float top, float bottom) {
+    return x >= left && x <= right && y > top && y < bottom;
+  }
+
+  // Adjust the ball's direction with speed
+  public void adjustBallDirection(float speed) {
+    dx = (dx > 0) ? -(dx + speed) : -(dx - speed);
+    dy = (dy > 0) ? (dy + speed) : (dy - speed);
   }
 }
 class Bat extends GameElement {
@@ -215,7 +219,7 @@ class Bat extends GameElement {
   }
 
   public void reactToBorders() {
-    // out of bound -> reset
+    // Ensure the bat stays within the vertical bounds
     if (y < 0) {
       y = 0;
     }
@@ -223,17 +227,16 @@ class Bat extends GameElement {
       y = height - w;
     }
 
-    // left bar
-    if (x < width/2) {
+    // Adjust horizontal position based on which bar (left or right)
+    if (x < width / 2) { // Left bar
       if (x < 0) {
         x = 0;
       }
       if (x > margin * 2 - thickness) {
         x = margin * 2 - thickness;
       }
-    // right bar
-    } else { 
-      if (x > width/2 && x < width - margin * 2) {
+    } else { // right bar
+      if (x > width / 2 && x < width - margin * 2) {
         x = width - margin * 2;
       }
       if (x > width - thickness) {
