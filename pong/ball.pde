@@ -22,9 +22,11 @@ class Ball extends GameElement {
     // Border check
     if (x > width) {
       resetBall(randomValue);
+      resetLevel();
     }
     if (x < 0 - r) {
       resetBall(randomValue);
+      resetLevel();
     }
     if (y > height - r || y < r) {
       dy = dy * -1;
@@ -50,6 +52,14 @@ class Ball extends GameElement {
     s2 = 0;
     dx = 4 * randomValue * -1;
     dy = 4 * randomValue;
+  }
+
+  // Reset level
+  void resetLevel() {
+    bat1Level = 0;
+    bat2Level = 0;
+    speedLevel = 0;
+    colorLevel = 0;
   }
 
 

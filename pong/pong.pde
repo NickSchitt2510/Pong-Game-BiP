@@ -3,7 +3,14 @@ Bat a1, a2;
 
 PFont myFont; // Font variable for text
 
-int s1, s2; // Scores variables
+// Scores variables
+int s1, s2;
+
+// Variables for levels
+int bat1Level = 0;
+int bat2Level = 0;
+int speedLevel = 0;
+int colorLevel = 0;
 
 // Constants for bats
 int len1 = 140; // Left bat length
@@ -21,6 +28,7 @@ void setup() {
   myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
   resetGame();
+
 }
 
 
@@ -29,6 +37,7 @@ void draw() {
   background(0);
   plotMiddleLine();
   plotScores();
+  plotLevel();
 
   // Handle objects
   b1.handle();
@@ -59,20 +68,40 @@ void plotMiddleLine() {
 
 void plotScores() {
   fill(255); // Text color (white)
-  text(s1, width/2-10-100, 100);
-  text(s2, width/2-10+100-5, 100);
+  textSize(32);
+  textAlign(LEFT);
+  text(s1, width / 2 - 100, 100);
+  textAlign(RIGHT);
+  text(s2, width / 2 + 100, 100);
+}
+
+
+void plotLevel() {
+  fill(255);
+  textSize(16);
+  textAlign(LEFT);
+  text("Bat Level: " + (bat1Level < 4 ? bat1Level : "MAX"), 40, 40);
+  text("Speed Level: " + (speedLevel < 4 ? speedLevel : "MAX"), 40, 60);
+  text("Color Level: " + (colorLevel < 3 ? colorLevel : "MAX"), 40, 80);
+  textAlign(RIGHT);
+  text("Bat Level: " + (bat2Level < 4 ? bat2Level : "MAX"), width - 40, 40);
+  text("Speed Level: " + speedLevel, width - 40, 60);
+  text("Color Level: " + (colorLevel < 3 ? colorLevel : "MAX"), width - 40, 80);
 }
 
 
 void changeBallColor() {
   // Ball color darkens every 5 total scores after players' scores reach 15
   if (s1+s2 > 15) {
+    colorLevel = 1;
     b1.c = 115;
   }
   if (s1+s2 > 20) {
+    colorLevel = 2;
     b1.c = 60;
   }
   if (s1+s2 > 25) {
+    colorLevel = 3;
     b1.c = 30;
   }
 }
@@ -80,20 +109,33 @@ void changeBallColor() {
 
 void changeBallSpeed() {
   // Adjust ball speed based on total scores
-  if (s1+s2 >= 5 && s1+s2 <= 40 && s1+s2 % 5 == 0) {
+  if (s1+s2 == 5) {
     speed = 1;
+    speedLevel = 1;
+  } else if (s1+s2 == 10) {
+    speed = 1;
+    speedLevel = 2;
+  } else if (s1+s2 == 15) {
+    speed = 1;
+    speedLevel = 3;
+  } else if (s1+s2 == 40) {
+    speed = 1;
+    speedLevel = 4;
   } else {
     speed = 0;
   }
+  
 }
 
 
 void shrinkBats() {
   // Shrink player's bat after player scores every 5 points
-  int newLen1 = len2 - min(int(s1) / 5 * 10, 80);
-  int newLen2 = len1 - min(int(s2) / 5 * 10, 80);
+  int newLen1 = len2 - min(int(s1) / 5 * 20, 80);
+  int newLen2 = len1 - min(int(s2) / 5 * 20, 80);
   a1.w = newLen1;
   a2.w = newLen2;
+  bat1Level = (bat1Level < 4 ? int(s1) / 5 : 4);
+  bat2Level = (bat1Level < 4 ? int(s2) / 5 : 4);
 }
 
 

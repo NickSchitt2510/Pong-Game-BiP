@@ -20,7 +20,14 @@ Bat a1, a2;
 
 PFont myFont; // Font variable for text
 
-int s1, s2; // Scores variables
+// Scores variables
+int s1, s2;
+
+// Variables for levels
+int bat1Level = 0;
+int bat2Level = 0;
+int speedLevel = 0;
+int colorLevel = 0;
 
 // Constants for bats
 int len1 = 140; // Left bat length
@@ -38,8 +45,8 @@ public void setup() {
   myFont = createFont("Courier", 32); // Load the built-in font with size 32
   textFont(myFont); // Set the font for text
   resetGame();
-}
 
+}
 
 
 public void draw() {
@@ -47,6 +54,7 @@ public void draw() {
   background(0);
   plotMiddleLine();
   plotScores();
+  plotLevel();
 
   // Handle objects
   b1.handle();
@@ -56,6 +64,7 @@ public void draw() {
   a1.handle();
   a2.handle();
 }
+
 
 public void resetGame() {
   b1 = new Ball(width/2, height*3/4, r);
@@ -73,42 +82,79 @@ public void plotMiddleLine() {
   }
 }
 
+
 public void plotScores() {
   fill(255); // Text color (white)
-  text(s1, width/2-10-100, 100);
-  text(s2, width/2-10+100-5, 100);
+  textSize(32);
+  textAlign(LEFT);
+  text(s1, width / 2 - 100, 100);
+  textAlign(RIGHT);
+  text(s2, width / 2 + 100, 100);
+}
+
+
+public void plotLevel() {
+  fill(255);
+  textSize(16);
+  textAlign(LEFT);
+  text("Bat Level: " + (bat1Level < 4 ? bat1Level : "MAX"), 40, 40);
+  text("Speed Level: " + (speedLevel < 4 ? speedLevel : "MAX"), 40, 60);
+  text("Color Level: " + (colorLevel < 3 ? colorLevel : "MAX"), 40, 80);
+  textAlign(RIGHT);
+  text("Bat Level: " + (bat2Level < 4 ? bat2Level : "MAX"), width - 40, 40);
+  text("Speed Level: " + speedLevel, width - 40, 60);
+  text("Color Level: " + (colorLevel < 3 ? colorLevel : "MAX"), width - 40, 80);
 }
 
 
 public void changeBallColor() {
   // Ball color darkens every 5 total scores after players' scores reach 15
   if (s1+s2 > 15) {
+    colorLevel = 1;
     b1.c = 115;
   }
   if (s1+s2 > 20) {
+    colorLevel = 2;
     b1.c = 60;
   }
   if (s1+s2 > 25) {
+    colorLevel = 3;
     b1.c = 30;
   }
 }
 
+
 public void changeBallSpeed() {
   // Adjust ball speed based on total scores
-  if (s1+s2 >= 5 && s1+s2 <= 40 && s1+s2 % 5 == 0) {
+  if (s1+s2 >= 5) {
     speed = 1;
+    speedLevel = 1;
+  } else if (s1+s2 == 10) {
+    speed = 1;
+    speedLevel = 2;
+  } else if (s1+s2 == 15) {
+    speed = 1;
+    speedLevel = 3;
+  } else if (s1+s2 == 40) {
+    speed = 1;
+    speedLevel = 4;
   } else {
     speed = 0;
   }
+  
 }
+
 
 public void shrinkBats() {
   // Shrink player's bat after player scores every 5 points
-  int newLen1 = len2 - min(PApplet.parseInt(s1) / 5 * 10, 80);
-  int newLen2 = len1 - min(PApplet.parseInt(s2) / 5 * 10, 80);
+  int newLen1 = len2 - min(PApplet.parseInt(s1) / 5 * 20, 80);
+  int newLen2 = len1 - min(PApplet.parseInt(s2) / 5 * 20, 80);
   a1.w = newLen1;
   a2.w = newLen2;
+  bat1Level = (bat1Level < 4 ? PApplet.parseInt(s1) / 5 : 4);
+  bat2Level = (bat1Level < 4 ? PApplet.parseInt(s2) / 5 : 4);
 }
+
 
 public void keyPressed() {
   // Left bar control
@@ -137,6 +183,7 @@ public void keyPressed() {
   }
 }
 
+
 public void keyReleased() {
   if (key == 'w' || key == 's') {
     a1.dy = 0;
@@ -158,11 +205,13 @@ class Ball extends GameElement {
     this.r = r;
   }
 
+
   // Methods
   public void plot() {
     fill(c);
     ellipse(x, y, r*2, r*2);
   }
+
 
   public void reactToBorders() {
     int randomValue = (random(2) > 1 ? 1 : -1);
@@ -170,19 +219,17 @@ class Ball extends GameElement {
     // Border check
     if (x > width) {
       resetBall(randomValue);
+      resetLevel();
     }
     if (x < 0 - r) {
       resetBall(randomValue);
+      resetLevel();
     }
     if (y > height - r || y < r) {
       dy = dy * -1;
     }
     
-    // // Bounce when touching the bat
-    // if (x <= a1.x + thickness + r && x >= a1.x + thickness + r + dx && y > a1.y && y < a1.y + len1) {
-    //   adjustBallDirection(speed);
-    //   s1 += 1;
-    // }
+    // Bounce when touching the bat
     if (ballTouchesBat(a1.x + thickness + r + dx, a1.x + thickness + r, a1.y, a1.y + len1)) {
       adjustBallDirection(speed);
       s1 += 1;
@@ -192,6 +239,8 @@ class Ball extends GameElement {
       s2 += 1;
     }
   }
+
+
   // Reset the ball's position and scores
   public void resetBall(int randomValue) {
     x = width / 2;
@@ -202,10 +251,20 @@ class Ball extends GameElement {
     dy = 4 * randomValue;
   }
 
+  // Reset level
+  public void resetLevel() {
+    bat1Level = 0;
+    bat2Level = 0;
+    speedLevel = 0;
+    colorLevel = 0;
+  }
+
+
   // Check if the ball touches a bat
   public boolean ballTouchesBat(float left, float right, float top, float bottom) {
     return x >= left && x <= right && y > top && y < bottom;
   }
+
 
   // Adjust the ball's direction with speed
   public void adjustBallDirection(float speed) {
@@ -217,11 +276,13 @@ class Bat extends GameElement {
   float w;
   float h;
 
+
   Bat (float x, float y, float w, float h) {
     super(x, y);
     this.w = w;
     this.h = h;
   }
+
 
   public void reactToBorders() {
     // Ensure the bat stays within the vertical bounds
@@ -250,6 +311,7 @@ class Bat extends GameElement {
     }
   }
 
+
   public void plot() {
     fill(c);
     rect(x, y, h, w);
@@ -260,9 +322,8 @@ class GameElement {
   float y;
   float dx;
   float dy;
-
-  // datatype to store color
   int c;
+
 
   // we can just enter default value 0 in childxP
   GameElement(float x, float y, float dx, float dy, int c) {
@@ -273,6 +334,8 @@ class GameElement {
     this.dy = dy;
     this.c = c;
   }
+
+
   // initialization for bats
   GameElement (float x, float y) {
     this.x = x;
@@ -282,18 +345,22 @@ class GameElement {
     this.c = color(255);
   }
 
+
   public void handle() {
     move();
     reactToBorders();
     plot();
   }
 
+
   public void move() {
     x = x + dx;
     y = y + dy;
   }
 
+
   public void reactToBorders() {}
+
 
   public void plot() {}
 }
