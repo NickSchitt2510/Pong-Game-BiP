@@ -1,5 +1,7 @@
 # Pong Game
 
+This is my final assignment for the Basic in Programming courses in LMU.
+
 ## Game Description
 
 This version of the Pong game is inspired from a classic arcade-style video game. The game is a two-player game, and both players have to control their bats to keep the ball rallying and score as many points as possible until a player misses, terminating the game.
