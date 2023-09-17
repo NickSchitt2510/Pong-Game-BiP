@@ -17,6 +17,7 @@ class Ball extends GameElement {
 
 
   void reactToBorders() {
+    int randomValue = (random(2) > 1 ? 1 : -1);
 
     // Border check
     if (x > width) {
@@ -38,6 +39,26 @@ class Ball extends GameElement {
       adjustBallDirection(speed);
       s2 += 1;
     }
+  }
+
+
+  // Reset the ball's position and scores
+  void resetBall(int randomValue) {
+    x = width / 2;
+    y = height / 2;
+    s1 = 0;
+    s2 = 0;
+    dx = 4 * randomValue * -1;
+    dy = 4 * randomValue;
+    c = 255;
+  }
+
+  // Reset level
+  void resetLevel() {
+    bat1Level = 0;
+    bat2Level = 0;
+    speedLevel = 0;
+    colorLevel = 0;
   }
 
 

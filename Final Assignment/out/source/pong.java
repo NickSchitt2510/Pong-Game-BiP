@@ -58,6 +58,8 @@ public void draw() {
   plotMiddleLine();
   plotScores();
   plotLevel();
+  println("b1.dx: "+b1.dx);
+  println("b1.dy: "+b1.dy);
 
   // Handle objects
   b1.handle();
@@ -241,6 +243,7 @@ class Ball extends GameElement {
 
 
   public void reactToBorders() {
+    int randomValue = (random(2) > 1 ? 1 : -1);
 
     // Border check
     if (x > width) {
@@ -262,6 +265,26 @@ class Ball extends GameElement {
       adjustBallDirection(speed);
       s2 += 1;
     }
+  }
+
+
+  // Reset the ball's position and scores
+  public void resetBall(int randomValue) {
+    x = width / 2;
+    y = height / 2;
+    s1 = 0;
+    s2 = 0;
+    dx = 4 * randomValue * -1;
+    dy = 4 * randomValue;
+    c = 255;
+  }
+
+  // Reset level
+  public void resetLevel() {
+    bat1Level = 0;
+    bat2Level = 0;
+    speedLevel = 0;
+    colorLevel = 0;
   }
 
 
