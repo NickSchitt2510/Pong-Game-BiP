@@ -70,7 +70,7 @@ To exit the game at any point, press the `ESC` key. This action will immediately
 
 # Game Design
 
-For more game design process, please refer to the `pong-description.pdf` in this folder.
+For more game design process, please refer to the `Pong-Description.pdf` in this folder.
 
 # License
 
