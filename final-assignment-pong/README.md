@@ -74,6 +74,10 @@ To exit the game at any point, press the `ESC` key. This action will immediately
 
 For more game design process, please refer to the `Pong-Description.pdf` in this folder.
 
+# Demo Result
+
+[Video to My Pong Game Demo](https://youtu.be/i-fkch8TKfc)
+
 # License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
